@@ -1,0 +1,597 @@
+/* ヘッダー（サンセットピンクの空とシーサー）・日タブ・フィルタ・カード・シート・FAB */
+
+/* ---- ヒーロー：ハイビスカスとシーサー ---- */
+.hero {
+  position: relative;
+  overflow: hidden;
+  padding: calc(20px + env(safe-area-inset-top)) 20px 44px;
+  background: linear-gradient(168deg, var(--sunset-1) 0%, var(--sunset-2) 42%, var(--sunset-3) 78%, var(--sunset-4) 100%);
+  color: var(--shiro);
+}
+
+.hero-eyebrow {
+  font-family: var(--font-num);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.24em;
+  opacity: 0.9;
+}
+
+.hero h1 {
+  font-size: 26px;
+  font-weight: 900;
+  letter-spacing: 0.06em;
+  margin-top: 2px;
+  text-shadow: 0 1px 0 rgba(201, 66, 110, 0.35);
+}
+
+.hero-dates {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 8px;
+  font-family: var(--font-num);
+  font-weight: 700;
+  font-size: 13px;
+}
+
+.trip-status {
+  background: rgba(255, 255, 255, 0.92);
+  color: var(--hana-deep);
+  border-radius: 999px;
+  padding: 3px 12px;
+  font-size: 12px;
+  font-weight: 800;
+  box-shadow: var(--shadow);
+}
+
+.shisa-hero {
+  position: absolute;
+  right: 6px;
+  top: 10px;
+  width: 126px;
+  height: auto;
+  animation: shisa-bounce 4.5s ease-in-out infinite;
+  filter: drop-shadow(0 6px 10px rgba(160, 55, 90, 0.28));
+}
+
+@keyframes shisa-bounce {
+  0%, 100% { transform: translateY(0) rotate(-2deg); }
+  50% { transform: translateY(-7px) rotate(2.5deg); }
+}
+
+.hibiscus {
+  position: absolute;
+  pointer-events: none;
+  transform-origin: 50% 50%;
+}
+
+/* 波の後ろから顔を出す（日付テキストに重ならない位置） */
+.hibiscus-l {
+  left: -20px;
+  bottom: -38px;
+  width: 84px;
+  height: 84px;
+  opacity: 0.95;
+  animation: sway 6s ease-in-out infinite;
+}
+
+/* ヒーロー内で2つめのハイビスカス（シーサーの足元に小さく） */
+.hibiscus-s {
+  right: 34px;
+  top: 90px;
+  width: 34px;
+  height: 34px;
+  opacity: 0.9;
+  animation: sway 6s ease-in-out infinite reverse;
+}
+
+@keyframes sway {
+  0%, 100% { transform: rotate(-7deg); }
+  50% { transform: rotate(7deg); }
+}
+
+/* 花びらがひらひら舞う */
+.petal {
+  position: absolute;
+  width: 11px;
+  height: 11px;
+  border-radius: 62% 38% 58% 42% / 55% 60% 40% 45%;
+  background: rgba(255, 220, 232, 0.85);
+  animation: flutter 7s linear infinite;
+}
+
+.petal:nth-child(1) { right: 44px; top: 10px; animation-delay: 0s; }
+.petal:nth-child(2) { right: 150px; top: 4px; width: 8px; height: 8px; animation-delay: 2.4s; }
+.petal:nth-child(3) { right: 90px; top: 18px; width: 9px; height: 9px; animation-delay: 4.8s; }
+
+/* カウントダウンピルの手前で消えるよう、落下距離は短めにする */
+@keyframes flutter {
+  0% { transform: translate(0, -12px) rotate(0deg); opacity: 0; }
+  15% { opacity: 0.95; }
+  100% { transform: translate(-22px, 62px) rotate(230deg); opacity: 0; }
+}
+
+.wave {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  width: 100%;
+  height: 22px;
+  display: block;
+}
+
+/* ---- スティッキーヘッド：日タブ + フィルタ ---- */
+.sticky-head {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: var(--suna);
+  padding: 10px 12px 8px;
+  box-shadow: 0 6px 12px -10px rgba(91, 65, 73, 0.35);
+}
+
+.day-tabs {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+}
+
+.day-tab {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  padding: 7px 2px 6px;
+  border-radius: 14px;
+  background: var(--shiro);
+  border: 2px solid var(--line);
+  transition: background 0.2s, border-color 0.2s, transform 0.1s;
+}
+
+.day-tab:active {
+  transform: scale(0.96);
+}
+
+.day-no {
+  font-family: var(--font-num);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  color: var(--ink-soft);
+}
+
+.day-date {
+  font-family: var(--font-num);
+  font-size: 21px;
+  font-weight: 800;
+  line-height: 1.1;
+}
+
+.day-w {
+  font-size: 10px;
+  color: var(--ink-soft);
+}
+
+.day-tab.is-active {
+  background: var(--hana);
+  border-color: var(--hana);
+  color: var(--shiro);
+}
+
+.day-tab.is-active .day-no,
+.day-tab.is-active .day-w {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.day-tab.is-today:not(.is-active) {
+  border-color: var(--umi);
+}
+
+.day-count {
+  position: absolute;
+  top: -6px;
+  right: -4px;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 4px;
+  border-radius: 999px;
+  background: var(--aka);
+  color: var(--shiro);
+  font-family: var(--font-num);
+  font-size: 11px;
+  font-weight: 800;
+  line-height: 18px;
+  text-align: center;
+  box-shadow: var(--shadow);
+}
+
+.filter-chips {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  margin-top: 8px;
+  padding-bottom: 2px;
+  scrollbar-width: none;
+}
+
+.filter-chips::-webkit-scrollbar {
+  display: none;
+}
+
+.filter-chip {
+  flex: 0 0 auto;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 5px 12px;
+  border-radius: 999px;
+  background: var(--shiro);
+  border: 1.5px solid var(--line);
+  color: var(--ink-soft);
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+
+.filter-chip.is-active {
+  background: var(--cat, var(--hana));
+  border-color: var(--cat, var(--hana));
+  color: var(--shiro);
+}
+
+/* ---- コンテンツ領域 ---- */
+.timeline {
+  padding: 14px 14px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.badge {
+  font-size: 10.5px;
+  font-weight: 800;
+  border-radius: 999px;
+  padding: 2px 8px;
+  white-space: nowrap;
+}
+
+.badge-reserved {
+  background: var(--shiro);
+  border: 1.5px solid var(--aka);
+  color: var(--aka);
+  font-size: 12px;
+  font-weight: 900;
+  padding: 3px 9px;
+}
+
+/* メモ・アクション（詳細シートで使用） */
+.card-memo {
+  font-size: 13.5px;
+  margin-top: 6px;
+  background: var(--suna);
+  border-radius: 10px;
+  padding: 8px 10px;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.card-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.btn-map,
+.btn-edit {
+  flex: 1;
+  text-align: center;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 9px 10px;
+  border-radius: 12px;
+}
+
+.btn-map {
+  background: var(--umi);
+  color: var(--shiro);
+}
+
+.btn-edit {
+  background: var(--suna);
+  border: 1.5px solid var(--line);
+  color: var(--ink);
+}
+
+/* ---- 空の状態 ---- */
+.empty-state {
+  text-align: center;
+  padding: 44px 20px;
+  color: var(--ink-soft);
+  font-size: 14px;
+  white-space: pre-line;
+}
+
+/* ---- FAB ---- */
+.fab {
+  position: fixed;
+  right: max(16px, calc(50% - 240px + 16px));
+  bottom: calc(20px + env(safe-area-inset-bottom));
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  background: linear-gradient(160deg, var(--hana) 20%, var(--hana-deep));
+  color: var(--shiro);
+  font-size: 30px;
+  font-weight: 700;
+  line-height: 1;
+  box-shadow: 0 6px 16px rgba(201, 66, 110, 0.4);
+  z-index: 30;
+  transition: transform 0.12s;
+}
+
+.fab:active {
+  transform: scale(0.92);
+}
+
+/* ---- 同期ステータス ---- */
+.sync-status {
+  position: fixed;
+  left: max(14px, calc(50% - 240px + 14px));
+  bottom: calc(24px + env(safe-area-inset-bottom));
+  font-size: 10.5px;
+  font-weight: 700;
+  color: var(--ink-soft);
+  background: rgba(255, 255, 255, 0.9);
+  border: 1.5px solid var(--line);
+  border-radius: 999px;
+  padding: 4px 10px;
+  z-index: 25;
+}
+
+.sync-status.is-cloud {
+  color: var(--umi-deep);
+  border-color: #8fdcd1;
+}
+
+/* ---- ボトムシート ---- */
+.sheet-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(90, 40, 60, 0.45);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s;
+  z-index: 40;
+}
+
+.sheet-backdrop.is-open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.sheet {
+  position: fixed;
+  left: 50%;
+  bottom: 0;
+  transform: translate(-50%, 105%);
+  width: min(100%, 480px);
+  max-height: 88dvh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  background: var(--suna);
+  border-radius: 24px 24px 0 0;
+  padding: 10px 18px calc(24px + env(safe-area-inset-bottom));
+  box-shadow: 0 -8px 30px rgba(90, 40, 60, 0.25);
+  transition: transform 0.3s cubic-bezier(0.32, 0.72, 0.25, 1);
+  z-index: 50;
+}
+
+.sheet.is-open {
+  transform: translate(-50%, 0);
+}
+
+.sheet-handle {
+  width: 44px;
+  height: 5px;
+  border-radius: 3px;
+  background: var(--line);
+  margin: 0 auto 12px;
+}
+
+.sheet-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.sheet-top h2 {
+  font-size: 18px;
+  font-weight: 900;
+}
+
+.sheet-close {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--ink-soft);
+  padding: 6px 10px;
+}
+
+.field {
+  display: block;
+  margin-bottom: 14px;
+}
+
+.field-label {
+  display: block;
+  font-size: 12.5px;
+  font-weight: 800;
+  margin-bottom: 5px;
+}
+
+.field-label .req {
+  color: var(--hana-deep);
+  font-size: 11px;
+  margin-left: 4px;
+}
+
+.field input[type='text'],
+.field input[type='url'],
+.field input[type='time'],
+.field select,
+.field textarea {
+  width: 100%;
+  border: 2px solid var(--line);
+  border-radius: 12px;
+  background: var(--shiro);
+  padding: 10px 12px;
+  font-weight: 500;
+}
+
+.field input:focus,
+.field select:focus,
+.field textarea:focus {
+  outline: none;
+  border-color: var(--hana);
+}
+
+.field-hint {
+  font-size: 11px;
+  color: var(--ink-soft);
+  margin-top: 4px;
+}
+
+.field-row {
+  display: grid;
+  /* minmax(0,1fr): 時間入力の固有幅で列がはみ出さないようにする */
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 10px;
+}
+
+.field-row > label {
+  min-width: 0;
+}
+
+.field input[type='time'] {
+  appearance: none;
+  -webkit-appearance: none;
+  min-width: 0;
+  min-height: 46px;
+  text-align: left;
+}
+
+.field input[type='time']::-webkit-date-and-time-value {
+  text-align: left;
+}
+
+.cat-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+
+.cat-chip {
+  position: relative;
+}
+
+.cat-chip input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.cat-chip span {
+  display: inline-block;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 7px 13px;
+  border-radius: 999px;
+  background: var(--shiro);
+  border: 2px solid var(--line);
+  color: var(--ink-soft);
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+
+.cat-chip input:checked + span {
+  background: var(--cat);
+  border-color: var(--cat);
+  color: var(--shiro);
+}
+
+.cat-chip input:focus-visible + span {
+  outline: 3px solid var(--hana);
+  outline-offset: 2px;
+}
+
+.segment {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  border: 2px solid var(--line);
+  border-radius: 12px;
+  overflow: hidden;
+  background: var(--shiro);
+}
+
+.segment label {
+  position: relative;
+}
+
+.segment input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.segment span {
+  display: block;
+  text-align: center;
+  font-size: 13.5px;
+  font-weight: 700;
+  padding: 10px 4px;
+  color: var(--ink-soft);
+}
+
+.segment input:checked + span {
+  background: var(--hana);
+  color: var(--shiro);
+}
+
+.segment label:first-child input:checked + span {
+  background: var(--ink-soft);
+}
+
+.form-error {
+  background: #fdecec;
+  color: #c0392b;
+  font-size: 13px;
+  font-weight: 700;
+  border-radius: 10px;
+  padding: 9px 12px;
+  margin-bottom: 12px;
+}
+
+.btn-save {
+  width: 100%;
+  background: linear-gradient(160deg, var(--hana) 20%, var(--hana-deep));
+  color: var(--shiro);
+  font-size: 16px;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  padding: 14px;
+  border-radius: 14px;
+  box-shadow: 0 4px 12px rgba(232, 97, 140, 0.35);
+}
+
+.btn-save:disabled {
+  opacity: 0.6;
+}
+
+.btn-delete {
+  width: 100%;
+  margin-top: 10px;
+  font-size: 13px;
+  font-weight: 700;
+  color: #c0392b;
+  padding: 10px;
+}

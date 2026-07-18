@@ -1,0 +1,242 @@
+/* 時間軸グリッド表示・ビュー切替・詳細シート */
+
+:root {
+  --hour-h: 52px; /* js/timegrid.js の HOUR_H と合わせる */
+  --label-w: 44px;
+}
+
+/* ---- 時間未定の予定 ---- */
+.tg-untimed {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+
+.tg-untimed-label {
+  font-size: 11px;
+  font-weight: 800;
+  color: var(--ink-soft);
+}
+
+.tg-untimed-chip {
+  font-size: 12px;
+  font-weight: 700;
+  padding: 5px 11px;
+  border-radius: 999px;
+  background: var(--cat-tint);
+  border: 1.5px solid var(--cat);
+  color: var(--ink);
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ---- グリッド本体 ---- */
+.tg-grid {
+  position: relative;
+  background: var(--shiro);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+
+.tg-line {
+  position: absolute;
+  left: var(--label-w);
+  right: 0;
+  border-top: 1px solid #eef0ee;
+  pointer-events: none;
+}
+
+.tg-line-half {
+  border-top-style: dashed;
+  border-top-color: #f4f5f3;
+}
+
+.tg-hour {
+  position: absolute;
+  left: 0;
+  width: calc(var(--label-w) - 8px);
+  text-align: right;
+  transform: translateY(-45%);
+  font-family: var(--font-num);
+  font-size: 10.5px;
+  font-weight: 700;
+  color: var(--ink-soft);
+  pointer-events: none;
+}
+
+.tg-hour:first-of-type {
+  transform: translateY(0);
+}
+
+/* ---- 予定ブロック ---- */
+.tg-block {
+  position: absolute;
+  z-index: 2;
+  text-align: left;
+  background: var(--cat-tint);
+  border-left: 4px solid var(--cat);
+  border-radius: 10px;
+  padding: 3px 7px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  box-shadow: 0 1px 4px rgba(91, 65, 73, 0.12);
+}
+
+.tg-block:active {
+  filter: brightness(0.96);
+}
+
+.tg-block.is-open-ended {
+  border-bottom: 2px dashed var(--cat);
+}
+
+.tg-block-time {
+  font-family: var(--font-num);
+  font-size: 10px;
+  font-weight: 800;
+  color: var(--cat);
+  line-height: 1.3;
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+
+/* NEW：まだ見ていない新規・更新された予定 */
+.tg-new {
+  flex: 0 0 auto;
+  font-family: var(--font-num);
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  color: var(--shiro);
+  background: var(--aka);
+  border-radius: 999px;
+  padding: 0 5px;
+  line-height: 1.6;
+}
+
+.tg-block.is-new {
+  box-shadow: 0 0 0 2px var(--aka), 0 1px 4px rgba(91, 65, 73, 0.12);
+}
+
+.tg-untimed-chip.is-new {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  box-shadow: 0 0 0 2px var(--aka);
+}
+
+/* 予約済み：ブロック右上に赤字で大きく */
+.tg-reserved {
+  position: absolute;
+  top: 3px;
+  right: 5px;
+  font-size: 10.5px;
+  font-weight: 900;
+  color: var(--aka);
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid var(--aka);
+  border-radius: 999px;
+  padding: 1px 7px;
+  line-height: 1.5;
+}
+
+.tg-block-title {
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.3;
+  color: var(--ink);
+  overflow: hidden;
+  overflow-wrap: anywhere;
+}
+
+/* ---- いまここライン ---- */
+.tg-now {
+  position: absolute;
+  left: var(--label-w);
+  right: 0;
+  z-index: 3;
+  border-top: 2px solid var(--umi);
+  pointer-events: none;
+}
+
+.tg-now-label {
+  position: absolute;
+  right: 4px;
+  top: -9px;
+  font-size: 10px;
+  font-weight: 800;
+  color: var(--shiro);
+  background: var(--umi);
+  border-radius: 999px;
+  padding: 1px 8px;
+  line-height: 1.5;
+}
+
+.tg-hint {
+  text-align: center;
+  font-size: 10.5px;
+  color: var(--ink-soft);
+  margin: 10px 0 4px;
+  opacity: 0.85;
+}
+
+/* ---- 詳細シート ---- */
+.detail-sheet .sheet-top h2 {
+  overflow-wrap: anywhere;
+}
+
+.detail-meta {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin-bottom: 12px;
+}
+
+.detail-cat {
+  font-size: 12px;
+  font-weight: 800;
+  padding: 4px 11px;
+  border-radius: 999px;
+  background: var(--cat);
+  color: var(--shiro);
+}
+
+.detail-time {
+  font-family: var(--font-num);
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.detail-reserved {
+  font-size: 11.5px;
+  font-weight: 700;
+  color: var(--ink-soft);
+}
+
+.detail-reserved.is-reserved {
+  color: var(--aka);
+  background: var(--shiro);
+  border: 1.5px solid var(--aka);
+  border-radius: 999px;
+  padding: 3px 10px;
+  font-size: 13px;
+  font-weight: 900;
+}
+
+.detail-sheet .card-memo {
+  margin-bottom: 12px;
+  background: var(--shiro);
+}
+
+.detail-sheet .card-actions {
+  margin-top: 0;
+}
