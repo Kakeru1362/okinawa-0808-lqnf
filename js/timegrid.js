@@ -161,7 +161,7 @@ export function renderTimeGrid(container, { events, date, unseenIds, onOpen, onA
     if (nowMin >= gridStartMin && nowMin <= endHour * 60) {
       const line = el('div', 'tg-now')
       line.style.top = `${((nowMin - gridStartMin) / 60) * HOUR_H}px`
-      line.appendChild(el('span', 'tg-now-label', '🦁 いま'))
+      line.appendChild(el('span', 'tg-now-label', '🌺 いま'))
       grid.appendChild(line)
     }
   }
